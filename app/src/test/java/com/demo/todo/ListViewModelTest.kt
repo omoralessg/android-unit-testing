@@ -25,7 +25,7 @@ class ListViewModelTest {
     @Test
     fun test_allTodosEmpty() {
         val expected = 0
-        val repository: TodoTestRepository = mock()
+        val repository: TodoTestRepository = mock(verboseLogging = true)
         whenever(repository.getAllTodos())
                 .thenReturn(MutableLiveData(arrayListOf()))
 

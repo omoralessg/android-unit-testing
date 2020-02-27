@@ -1,3 +1,5 @@
+@file:Suppress("IncorrectScope")
+
 package com.demo.todo
 
 import com.demo.todo.add.AddViewModel
@@ -5,9 +7,14 @@ import com.demo.todo.data.TodoRepository
 import com.nhaarman.mockitokotlin2.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Rule
 import org.junit.Test
+import org.mockito.junit.MockitoJUnit
 
 class AddViewModelTest {
+    @get:Rule
+    val rule = MockitoJUnit.collector()
+
     @Test
     fun test_save() {
         val repository: TodoRepository = mock()
@@ -53,6 +60,10 @@ class AddViewModelTest {
         model.todo.title = actualTitle
         val actual = model.save()
         assertNull(actual)
+        verify(repository).insert(any())
+//        verify(repository.insert(
+//                argThat { created == System.currentTimeMillis() }
+//        ))
         verify(repository).insert(
                 argThat {
                     title == actualTitle && dueDate == null
